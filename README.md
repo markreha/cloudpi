@@ -17,7 +17,7 @@ The [IoT Sense HAT](http://pythonhosted.org/sense-hat/) supports the following f
  
 Basic Application Functionality
 --------
-The IoT Device Reference application, as illustrated in the flow chart below, primary functionality includes sitting in loop reading the Sense HAT IoT data, posting this data to server using a REST API, and then sleeping for a specified period of time. The current IoT Device Reference application leverages the LED display and the Temperature, Humidity, and Barometric pressure sensors in its implementation. The application could be extended in the future to leverage other features of the Sense HAT.
+The IoT Device Reference application logic, as illustrated in the flow chart below, primary functionality includes sitting in loop reading the Sense HAT IoT data, posting this data to server using a REST API, and then sleeping for a specified period of time. The current IoT Device Reference application leverages the LED display and the Temperature, Humidity, and Barometric pressure sensors in its implementation. The application uses the Logging Framework built into the Python 3 libraries. The application could be extended in the future to leverage other features of the Sense HAT.
 
 ![IoT Device Flow Chart Diagram](https://github.com/markreha/cloudworkshop/blob/master/sdk/docs/architecture/images/iotflowchart.png)
 
