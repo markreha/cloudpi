@@ -1,21 +1,24 @@
 **IoT Device Reference Application**
 ==================
-The example IoT Device Reference application implemented in a Raspberry Pi and Sense HAT reads IoT data from the Sense HAT and posts this data to the IoT Services Reference application using its published REST API's. These applications in combination demonstrate a simple, scalable, Cloud based IoT application.
+The example IoT Device Reference application implemented in a Raspberry Pi 3 and Sense HAT reads IoT data from the Sense HAT and posts this data to the IoT Services Reference application using its published REST API's. These applications in combination demonstrate a simple, scalable, Cloud based IoT application.
 
 ![IoT Device](https://github.com/markreha/cloudworkshop/blob/master/sdk/docs/architecture/images/iotdevice.png)
 
+The [IoT Sense HAT](http://pythonhosted.org/sense-hat/) supports the following features:
+
+ - Temperature, Humidity, and Barometric pressure 
+ - Gyroscope Accelerometer, and Magnetometer
+ - LED display 
+ - Joystick
+
+
 Architecture & Technologies
 --------
- The IoT Services Reference application is designed and implemented in Java using the Spring Framework (Spring Core and Spring JDBC) that implements its published REST API's based on the JAX-RS framework using the Jackson and Jersey implementation libraries. 
+ The IoT Device Reference application is designed and implemented in Python using the Sense HAT API's included in the Raspbian OS image.  
  
-REST API's
+Basic Application Functionality
 --------
-The IoT Services Reference application publishes 3 API's, one of which is an API used for testing and the remaining 2 API's to save and retrieve IoT Weather Data. It should be noted that the REST endpoint is secured by using HTTPS and Basic HTTP Authentication. All REST API's are based off of the [hostname]/cloudservices/weather URL.
+The IoT Device Reference application, as show in the flow chart below, primary functionality includes sitting in loop reading the Sense HAT IoT data, posting this data to server using a REST API, and then sleeping for a specified period of time. The current IoT Device Reference application leverages the LED display and the Temperature, Humidity, and Barometric pressure sensors in its implementation. The application could be extended in the future to leverage other features of the Sense HAT.
 
-![IoT Services UML Diagram](https://github.com/markreha/cloudworkshop/blob/master/sdk/docs/architecture/images/iotrestservice.png)
+![IoT Device Flow Chart Diagram](https://github.com/markreha/cloudworkshop/blob/master/sdk/docs/architecture/images/iotrestservice.png)
 
-The REST API's include:
-
- - GET at /test: will return a test string and is used to test the endpoint
- - GET at /get: will return IoT Weather data for a specified Device ID, From Date, and End Date
- - POST at /save: will save IoT Weather data from the a specified WeatherSensorModel
