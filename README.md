@@ -4,17 +4,16 @@ The example IoT Device Reference application implemented in a Raspberry Pi 3 and
 
 ![IoT Device](https://github.com/markreha/cloudworkshop/blob/master/sdk/docs/architecture/images/iotdevice.png)
 
+Architecture & Technologies
+--------
+ The IoT Device Reference application is designed and implemented in Python using the Sense HAT API's included in the Raspbian OS image. 
+
 The [IoT Sense HAT](http://pythonhosted.org/sense-hat/) supports the following features:
 
  - Temperature, Humidity, and Barometric pressure 
  - Gyroscope Accelerometer, and Magnetometer
  - LED display 
- - Joystick
-
-
-Architecture & Technologies
---------
- The IoT Device Reference application is designed and implemented in Python using the Sense HAT API's included in the Raspbian OS image.  
+ - Joystick 
  
 Basic Application Functionality
 --------
@@ -22,3 +21,11 @@ The IoT Device Reference application, as show in the flow chart below, primary f
 
 ![IoT Device Flow Chart Diagram](https://github.com/markreha/cloudworkshop/blob/master/sdk/docs/architecture/images/iotrestservice.png)
 
+Repository Contents
+----------
+This repository contains code to support Raspberry Pi 3 and Sense HAT or a Raspberry Pi 3 DHT11 and LED wired to a breadboard. The IoT Device Reference application can be used as a starting point to monitor Weather IoT data.
+
+ - ***app/hat***: this folder contains the Python 3 code for the Reference IoT Device application using a Sense HAT.
+ - ***app/discrete***: this folder contains the Python 3 code for the Reference IoT Device application using the DHT11 and LED discrete components.
+
+[Back to Top](#iot-device-reference-application)
