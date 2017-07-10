@@ -80,7 +80,30 @@ def pixel(error):
     sense.set_pixel(pixel_location & 0x07, int(pixel_location / 8), color)
     pixel_location = pixel_location + 1
     
+# Post Data to the Primary Endpoint
+def post_primary_endpoint(webApiUrl, webApiUsername, webApiPassword, strj):
+    # POST the JSON results to the RESTful Web API using HTTP Basic Authentication
+    response = requests.post(webApiUrl, strj, headers={'Content-Type':'application/json'}, auth=(webApiUsername, webApiPassword))
+    if response.status_code == 200:
+        pixel(False)
+        strj = response.json()
+        logger.info("Response status is %s with message of %s" % (strj["status"], strj["message"]))
+    else:
+        pixel(True)
+        logger.error("Response error with HTTP status code of %d" % response.status_code)
 
+# Post Data to the Secondary Endpoints
+def post_secondary_endpoint(secondary_endpoints, strj):
+    # POST the JSON results to the Secondary Endpoints
+    if process_secondary_endpoints:
+        for i in range(len(secondary_endpoints)):
+            response = requests.post(secondary_endpoints[i][1], strj, headers={'Content-Type':'application/json'}, auth=(secondary_endpoints[i][2], secondary_endpoints[i][3]))
+            if response.status_code == 200:
+                strj = response.json()
+                logger.info("   Sent data to %s Secondary Endpoint sucessful with response status of %s with message of %s" % (secondary_endpoints[i][0], strj["status"], strj["message"]))
+            else:
+                logger.error("   Sent data to %s Secondary Endpoint failed with sHTTP tatus code of %d" % (secondary_endpoints[i][0], response.status_code))
+            
 #################################################
 
 # Setup log file for application
@@ -115,6 +138,8 @@ deviceID = cfg.deviceID
 webApiUrl = environment["webApi"]
 webApiUsername = environment["username"]
 webApiPassword = environment["password"]
+secondary_endpoints = cfg.sec_endpoints
+process_secondary_endpoints = cfg.process_sec_endpoints
 
 # Display Startup Screen
 startupScreen()
@@ -151,18 +176,11 @@ while True:
     # Convert the Temperature Data Object to JSON string
     strj = json.dumps(temperatureData, ensure_ascii=False)
 
-    # POST the JSON results to the RESTful Web API using HTTP Basic Authentication
-    response = requests.post(webApiUrl, strj, headers={'Content-Type':'application/json'}, auth=(webApiUsername, webApiPassword))
-    if response.status_code == 200:
-        #indicator(True, False)
-        pixel(False)
-        strj = response.json()
-        logger.info("Response status is %s with message of %s" % (strj["status"], strj["message"]))
-    else:
-        #indicator(True, True)
-        pixel(True)
-        logger.error("Response error with status code of %d" % response.status_code)
-    time.sleep(2)
+    # POST the JSON results to the Primary Endpoint
+    post_primary_endpoint(webApiUrl, webApiUsername, webApiPassword, strj)
+
+    # POST the JSON results to the Secondary Endpoints
+    post_secondary_endpoint(secondary_endpoints, strj)
     
     # Sleep until we need to read the sensors again
     time.sleep(sampleTime)
