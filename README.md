@@ -2,7 +2,9 @@
 ==================
 The example IoT Device Reference application implemented in a Raspberry Pi 3 and Sense HAT reads IoT data from the Sense HAT and posts this data to the IoT Services Reference application using its published REST API's. These applications in combination demonstrate a simple, scalable, Cloud based IoT application.
 
-![IoT Device](https://github.com/markreha/cloudworkshop/blob/master/sdk/docs/architecture/images/iotdevice.png)
+<p align="center">
+	<img src="https://github.com/markreha/cloudworkshop/blob/master/sdk/docs/architecture/images/iotdevice.png" alt="IoT Device"/>
+</p>
 
 Architecture & Technologies
 --------
