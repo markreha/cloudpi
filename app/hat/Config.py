@@ -17,7 +17,7 @@ env_dev2 = {'webApi': 'http://node5.codenvy.io:37551/cloudservices/rest/weather/
 env_qa = {'webApi': 'http://test-marktest.7e14.starter-us-west-2.openshiftapps.com/cloudservices/rest/weather/save',
          	'username': 'CloudWorkshop',
          	'password': 'dGVzdHRlc3Q='}
-env_prod = {'webApi': 'https://markwsserve.azurewebsites.net/cloudservices/rest/weather/save',
+env_prod = {'webApi': 'https://markwsserve2.azurewebsites.net/cloudservices/rest/weather/save',
          	'username': 'CloudWorkshop',
          	'password': 'dGVzdHRlc3Q='}
 
