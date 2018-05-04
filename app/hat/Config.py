@@ -2,7 +2,7 @@
 environment = "qa"
 
 # Sample time in ~seconds
-sampleTime = 1800
+sampleTime = 3600
 
 # Device ID for this PI
 deviceID = 0
@@ -14,16 +14,15 @@ env_dev1 = {'webApi': 'http://marks-macbookair.local:8080/cloudservices/rest/wea
 env_dev2 = {'webApi': 'http://node5.codenvy.io:37551/cloudservices/rest/weather/save',
          	'username': 'CloudWorkshop',
          	'password': 'dGVzdHRlc3Q='}
-env_qa = {'webApi': 'http://cloudservices-workshop.1d35.starter-us-east-1.openshiftapps.com/cloudservices/rest/weather/save',
+env_qa = {'webApi': 'http://test-marktest.7e14.starter-us-west-2.openshiftapps.com/cloudservices/rest/weather/save',
          	'username': 'CloudWorkshop',
          	'password': 'dGVzdHRlc3Q='}
-env_prod = {'webApi': 'http://cloudservices-workshop.1d35.starter-us-east-1.openshiftapps.com/cloudservices/rest/weather/save',
+env_prod = {'webApi': 'https://markwsserve.azurewebsites.net/cloudservices/rest/weather/save',
          	'username': 'CloudWorkshop',
          	'password': 'dGVzdHRlc3Q='}
 
 # Optional Secondary endpoints to post data
-process_sec_endpoints = False
+process_sec_endpoints = True
 sec_endpoints = [
-			['Test 1', 'http://somewhere.com/cloudservices/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q='],
-			['Test 2', 'http://somewhere.com/cloudservices/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q=']
+			['Azure', 'https://markwsserve2.azurewebsites.net/cloudservices/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q=']
 		]
