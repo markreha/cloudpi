@@ -2,7 +2,7 @@
 environment = "qa"
 
 # Sample time in ~seconds
-sampleTime = 3600
+sampleTime = 7200
 
 # Device ID for this PI
 deviceID = 0
@@ -24,5 +24,6 @@ env_prod = {'webApi': 'https://markwsserve2.azurewebsites.net/cloudservices/rest
 # Optional Secondary endpoints to post data
 process_sec_endpoints = True
 sec_endpoints = [
-			['Azure', 'https://markwsserve2.azurewebsites.net/cloudservices/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q=']
+			['Azure', 'https://markwsserve2.azurewebsites.net/cloudservices/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q='],
+                        ['Google', 'https://cloud-workshop-services.appspot.com/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q=']
 		]
