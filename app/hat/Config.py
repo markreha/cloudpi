@@ -26,4 +26,4 @@ process_sec_endpoints = True
 sec_endpoints = [
 			['Azure', 'https://markwsserve2.azurewebsites.net/cloudservices/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q='],
                         ['Google', 'https://cloud-workshop-services.appspot.com/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q=']
-		]
+ 		]
