@@ -99,8 +99,8 @@ def post_secondary_endpoint(secondary_endpoints, strj):
         for i in range(len(secondary_endpoints)):
             response = requests.post(secondary_endpoints[i][1], strj, headers={'Content-Type':'application/json'}, auth=(secondary_endpoints[i][2], secondary_endpoints[i][3]))
             if response.status_code == 200:
-                strj = response.json()
-                logger.info("   Sent data to %s Secondary Endpoint sucessful with response status of %s with message of %s" % (secondary_endpoints[i][0], strj["status"], strj["message"]))
+                strjResponse = response.json()
+                logger.info("   Sent data to %s Secondary Endpoint sucessful with response status of %s with message of %s" % (secondary_endpoints[i][0], strjResponse["status"], strjResponse["message"]))
             else:
                 logger.error("   Sent data to %s Secondary Endpoint failed with sHTTP tatus code of %d" % (secondary_endpoints[i][0], response.status_code))
             
@@ -174,7 +174,7 @@ while True:
     logger.debug(msg)
 
     # Convert the Temperature Data Object to JSON string
-    strj = json.dumps(temperatureData, ensure_ascii=False)
+    strj = json.dumps(temperatureData, ensure_ascii=True)
 
     # POST the JSON results to the Primary Endpoint
     post_primary_endpoint(webApiUrl, webApiUsername, webApiPassword, strj)
