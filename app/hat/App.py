@@ -64,13 +64,15 @@ def indicator(state, error):
     else:
         sense.show_letter(' ', text_colour=color)
 
-# Turn a Pixel on
+# Turn a Pixel on, 0 is no Error, 1 is primary endpoint error, 2 is secondary endpoint error
 def pixel(error):
     global pixel_location
     if pixel_location == 64:
         pixel_location = 0
         sense.clear()
-    if error:
+    if error > 1:
+        color = (255, 165, 0)
+    elif error == 1:
         color = (255, 0, 0)
     else:
         if pixel_location & 1:
@@ -80,21 +82,22 @@ def pixel(error):
     sense.set_pixel(pixel_location & 0x07, int(pixel_location / 8), color)
     pixel_location = pixel_location + 1
     
-# Post Data to the Primary Endpoint
+# Post Data to the Primary Endpoint and return count of unsuccessful posts
 def post_primary_endpoint(webApiUrl, webApiUsername, webApiPassword, strj):
     # POST the JSON results to the RESTful Web API using HTTP Basic Authentication
     response = requests.post(webApiUrl, strj, headers={'Content-Type':'application/json'}, auth=(webApiUsername, webApiPassword))
     if response.status_code == 200:
-        pixel(False)
         strj = response.json()
         logger.info("Response status is %s with message of %s" % (strj["status"], strj["message"]))
+        return 0
     else:
-        pixel(True)
         logger.error("Response error with HTTP status code of %d" % response.status_code)
+        return 1
 
-# Post Data to the Secondary Endpoints
+# Post Data to the Secondary Endpoints and return the count of unsuccessful posts
 def post_secondary_endpoint(secondary_endpoints, strj):
     # POST the JSON results to the Secondary Endpoints
+    status = 0
     if process_secondary_endpoints:
         for i in range(len(secondary_endpoints)):
             response = requests.post(secondary_endpoints[i][1], strj, headers={'Content-Type':'application/json'}, auth=(secondary_endpoints[i][2], secondary_endpoints[i][3]))
@@ -102,7 +105,9 @@ def post_secondary_endpoint(secondary_endpoints, strj):
                 strjResponse = response.json()
                 logger.info("   Sent data to %s Secondary Endpoint sucessful with response status of %s with message of %s" % (secondary_endpoints[i][0], strjResponse["status"], strjResponse["message"]))
             else:
-                logger.error("   Sent data to %s Secondary Endpoint failed with sHTTP tatus code of %d" % (secondary_endpoints[i][0], response.status_code))
+                logger.error("   Sent data to %s Secondary Endpoint failed with HTTP status code of %d" % (secondary_endpoints[i][0], response.status_code))
+                status += 1
+    return status
             
 #################################################
 
@@ -114,7 +119,7 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(log)
 
 # Load the current Environment Configuration
-print("IoT Weather Application v0.1")
+print("IoT Weather Application v0.2")
 if cfg.environment == "dev1":
     print("Running Dev 1 Environment Configuration")
     logger.info("Running Dev 1 Environment Configuration")
@@ -177,10 +182,18 @@ while True:
     strj = json.dumps(temperatureData, ensure_ascii=True)
 
     # POST the JSON results to the Primary Endpoint
-    post_primary_endpoint(webApiUrl, webApiUsername, webApiPassword, strj)
-
+    status1 = post_primary_endpoint(webApiUrl, webApiUsername, webApiPassword, strj)
+    
     # POST the JSON results to the Secondary Endpoints
-    post_secondary_endpoint(secondary_endpoints, strj)
+    status2 = post_secondary_endpoint(secondary_endpoints, strj)
+
+    # Display Status LED
+    if status2 != 0:
+        pixel(2)
+    elif status1 == 1: 
+        pixel(1)
+    else:
+        pixel(0)
     
     # Sleep until we need to read the sensors again
     time.sleep(sampleTime)
