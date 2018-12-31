@@ -27,7 +27,7 @@ It should be noted that the IoT Device Reference application contains additional
 
 Repository Contents
 ----------
-This repository contains code to support the Raspberry Pi 3 and Sense HAT or a Raspberry Pi 3 along with discrete DHT11 and LED components wired to a breadboard. The IoT Device Reference application can be used as a starting point to monitor Weather IoT data.
+This repository contains code to support the Raspberry Pi 3 and Sense HAT or a Raspberry Pi 3 along with discrete DHT11 and LED components wired to a breadboard. The IoT Device Reference application can be used as a starting point to monitor Weather IoT data. To run this code on your Raspberry Pi 3 simply clone this repository to your device and customize the configuration as nessarary for your backend REST API's.
 
  - ***app/hat***: this folder contains the Python 3 code for the Reference IoT Device application using a Sense HAT.
  - ***app/discrete***: this folder contains the Python 3 code for the Reference IoT Device application using the DHT11 and LED discrete components.
