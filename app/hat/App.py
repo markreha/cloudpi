@@ -64,7 +64,7 @@ def indicator(state, error):
     else:
         sense.show_letter(' ', text_colour=color)
 
-# Turn a Pixel on, 0 is no Error, 1 is primary endpoint error, 2 is secondary endpoint error
+# Turn a Pixel on, -1 is HTTP Exception, 0 is no Error, 1 is primary endpoint error, 2 is secondary endpoint error
 def pixel(error):
     global pixel_location
     if pixel_location == 64:
@@ -74,11 +74,13 @@ def pixel(error):
         color = (255, 165, 0)
     elif error == 1:
         color = (255, 0, 0)
-    else:
+    elif error == 0:
         if pixel_location & 1:
             color = (255, 255, 255)
         else:
             color = (100, 50, 150)
+    else:
+        color = (0, 255, 0)
     sense.set_pixel(pixel_location & 0x07, int(pixel_location / 8), color)
     pixel_location = pixel_location + 1
     
@@ -119,7 +121,7 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(log)
 
 # Load the current Environment Configuration
-print("IoT Weather Application v0.2")
+print("IoT Weather Application v0.3")
 if cfg.environment == "dev1":
     print("Running Dev 1 Environment Configuration")
     logger.info("Running Dev 1 Environment Configuration")
@@ -181,20 +183,25 @@ while True:
     # Convert the Temperature Data Object to JSON string
     strj = json.dumps(temperatureData, ensure_ascii=True)
 
-    # POST the JSON results to the Primary Endpoint
-    status1 = post_primary_endpoint(webApiUrl, webApiUsername, webApiPassword, strj)
+    try:
+        # POST the JSON results to the Primary Endpoint
+        status1 = post_primary_endpoint(webApiUrl, webApiUsername, webApiPassword, strj)
     
-    # POST the JSON results to the Secondary Endpoints
-    status2 = post_secondary_endpoint(secondary_endpoints, strj)
+        # POST the JSON results to the Secondary Endpoints
+        status2 = post_secondary_endpoint(secondary_endpoints, strj)
 
-    # Display Status LED
-    if status2 != 0:
-        pixel(2)
-    elif status1 == 1: 
-        pixel(1)
-    else:
-        pixel(0)
-    
+        # Display Status LED
+        if status2 != 0:
+            pixel(2)
+        elif status1 == 1: 
+            pixel(1)
+        else:
+            pixel(0)
+    except:
+        # Log exception and update Status LED
+        logger.error("   Error: HTTP exception caught.")
+        pixel(-1)
+            
     # Sleep until we need to read the sensors again
     time.sleep(sampleTime)
 
