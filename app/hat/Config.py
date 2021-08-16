@@ -27,4 +27,6 @@ sec_endpoints = [
 			['Azure', 'https://cloudservices3.azurewebsites.net/cloudservices/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q='],
                         ['Google', 'https://cloud-workshop-services.appspot.com/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q='],
                         ['Heroku', 'https://mark-servicesapp.herokuapp.com/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q='],
-                        ['Amazon', 'http://services-app.us-east-2.elasticbeanstalk.com/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q=']
+                        ['Amazon', 'http://services-app.us-east-2.elasticbeanstalk.com/rest/weather/save', 'CloudWorkshop', 'dGVzdHRlc3Q='],
+                        ['Azure Serverless', 'https://markiotfunctions.azurewebsites.net/api/saveweatherdata', 'CloudWorkshop', 'dGVzdHRlc3Q=']
+ 		]
