@@ -80,7 +80,7 @@ def pixel(error):
         else:
             color = (100, 50, 150)
     else:
-        color = (0, 255, 0)
+        color = (255, 0, 0)
     sense.set_pixel(pixel_location & 0x07, int(pixel_location / 8), color)
     pixel_location = pixel_location + 1
     
